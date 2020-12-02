@@ -23,7 +23,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [isMessagePopupOpen, setMessagePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(undefined);
+  const [selectedCard, setSelectedCard] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -33,7 +33,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   const history = useHistory();
-  console.log(cards)
+  console.log("App", cards)
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -47,8 +47,8 @@ function App() {
       });
   }, [loggedIn])
 
-  console.log(api.getUserData())
-  console.log(api.getInitialCards())
+  console.log("appUser", api.getUserData())
+  console.log("app2", api.getInitialCards())
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);

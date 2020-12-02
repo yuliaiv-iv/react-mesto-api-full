@@ -16,19 +16,19 @@ const cardShema = new mongoose.Schema({
       },
       message: 'Невалидный url',
     },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    likes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      default: [],
-    }],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    default: [],
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 module.exports = mongoose.model('card', cardShema);

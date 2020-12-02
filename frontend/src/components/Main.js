@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 function Main(props) {
     const { onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete, cards } = props;
     const currentUser = React.useContext(CurrentUserContext);
-    console.log(cards);
+    console.log('Main', cards);
 
     return (
         <main className="content">
@@ -44,7 +44,7 @@ function Main(props) {
             </section>
             <section className="card-container">
                 <ul className="card-container__list">
-                { console.log(cards) }
+                { console.log('List', cards) }
                     {/* {cards.map(card => <Card {...cards}
                         onCardClick={onCardClick}
                         onCardLike={onCardLike}

@@ -4,7 +4,6 @@ const getCards = (req, res) => {
   Card.find({})
     .then((cards) => {
       res.status(200).send({ cards });
-      console.log(cards);
     })
     .catch((err) => {
       console.log(err);
@@ -15,8 +14,11 @@ const getCards = (req, res) => {
 const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
-  Card.create({ name, link, owner })
-    .then((card) => res.status(200).send(card))
+  Card.create({ name, link, owner }, console.log({ name, link, owner }))
+    .then((card) => {
+      res.status(200).send(card);
+      // console.log(req.body);
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
