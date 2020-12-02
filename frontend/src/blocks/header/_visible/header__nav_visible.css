@@ -1,0 +1,7 @@
+@media screen and (max-width: 760px) {
+  .header__nav_visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all .66s;
+  }
+}

@@ -1,0 +1,9 @@
+.button__like {
+    background-image: url(../../../images/like_icon.svg);
+    border: none;
+    min-width: 21px;
+    min-height: 19px;
+}
+.button__like_active {
+    background-image: url(../../../images/like_icon_filled.svg);
+}

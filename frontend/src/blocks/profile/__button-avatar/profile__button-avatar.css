@@ -1,0 +1,7 @@
+.profile__button-avatar {
+        outline: none;
+        background-image: url(../../../images/avatar_button.svg);
+        width: 26px;
+        height: 26px;
+        border: none;
+    }

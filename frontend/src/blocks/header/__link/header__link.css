@@ -1,0 +1,19 @@
+.header__link {
+  text-decoration: none;
+  color: #fff;
+  align-self: flex-end;
+  padding-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-left: 24px;
+}
+
+@media screen and (max-width: 760px) {
+  .header__link {
+    font-size: 14px;
+    padding-bottom: 0;
+    margin-left: 0;
+    align-self: center;
+    margin-top: 18px;
+  }
+}

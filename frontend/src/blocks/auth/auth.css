@@ -1,0 +1,17 @@
+@import url(./__form/auth__form.css);
+@import url(./__item/auth__item.css);
+@import url(./__title/auth__title.css);
+@import url(./__button-submit/auth__button-submit.css);
+@import url(./__info/auth__info.css);
+@import url(./__text/auth__text.css);
+@import url(./__link/auth__link.css);
+
+.auth {
+  margin-top: 60px;
+}
+
+@media screen and (max-width: 475px) {
+  .auth {
+    margin-top: 40px;
+  }
+}
