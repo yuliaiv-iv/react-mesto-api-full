@@ -3,7 +3,8 @@ const Card = require('../models/card');
 const getCards = (req, res) => {
   Card.find({})
     .then((cards) => {
-      res.status(200).send({ cards });
+      res.status(200).send(cards);
+      // console.log(cards);
     })
     .catch((err) => {
       console.log(err);
@@ -17,7 +18,7 @@ const createCard = (req, res) => {
   Card.create({ name, link, owner }, console.log({ name, link, owner }))
     .then((card) => {
       res.status(200).send(card);
-      // console.log(req.body);
+      // console.log(card);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -60,9 +61,26 @@ const likeCard = (req, res) => {
     });
 };
 
+const dislikeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.id,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .then((card) => res.status(200).send(card))
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
+    });
+};
+
 module.exports = {
   getCards,
   createCard,
   deleteCard,
   likeCard,
+  dislikeCard,
 };

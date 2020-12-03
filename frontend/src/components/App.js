@@ -33,25 +33,25 @@ function App() {
   const [message, setMessage] = useState('');
 
   const history = useHistory();
-  console.log("App", cards)
+
+  console.log("state",cards)
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
       .then(([info, card]) => {
         setCurrentUser(info);
         setCards(card);
-        console.log(card)
       })
       .catch((err) => {
         console.log(err);
       });
   }, [loggedIn])
 
-  console.log("appUser", api.getUserData())
-  console.log("app2", api.getInitialCards())
+  // console.log("appUser", api.getUserData())
+  // console.log("app2", api.getInitialCards())
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    const isLiked = card.likes.some(like => like === currentUser._id);
     api.changeLikeStatus(card._id, !isLiked)
       .then((newCard) => {
         const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -229,6 +229,7 @@ function App() {
           <Switch>
             <ProtectedRoute exact path='/' loggedIn={loggedIn}>
               <Header email={email} link="Выйти" onClick={onSignOut} />
+              {console.log("App return", cards)}
               <Main
                 cards={cards}
                 onEditProfile={handleEditProfileClick}

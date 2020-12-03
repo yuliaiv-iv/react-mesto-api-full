@@ -44,13 +44,13 @@ function Main(props) {
             </section>
             <section className="card-container">
                 <ul className="card-container__list">
-                { console.log('List', cards) }
-                    {/* {cards.map(card => <Card {...cards}
+                {/* { console.log('List inside ul', cards) } */}
+                    {cards.map(card => <Card {...cards}
                         onCardClick={onCardClick}
                         onCardLike={onCardLike}
                         onCardDelete={onCardDelete}
                         key={card._id}
-                        card={card} />)} */}
+                        card={card} />)}
                 </ul>
             </section>
         </main>
