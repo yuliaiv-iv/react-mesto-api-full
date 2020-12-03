@@ -56,11 +56,6 @@ const createUser = (req, res) => {
       }
       return bcrypt.hash(password, 10);
     })
-    // bcrypt.hash(password, 10)
-    // const hash = bcrypt.hash(password, 10);
-    // User.create({
-    //   name, about, avatar, email, password,
-    // })
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
@@ -76,13 +71,43 @@ const createUser = (req, res) => {
     });
 };
 
+const updateUserInfo = (req, res) => {
+  const { name, about } = req.body;
+  console.log(req.body);
+  console.log(req.user._id);
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+    .then((user) => {
+      res.status(200).send(user);
+      // console.log({ name: user.name, about: user.about });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send({ message: 'oooops' });
+    });
+};
+
+const updateUserAvatar = (req, res) => {
+  const { avatar } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send({ message: 'oooops' });
+    });
+};
+
 const loginUser = (req, res) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(user);
+      // console.log(user);
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.status(200).send({ token, name: user.name, email: user.email });
+      console.log(token);
+      console.log({ token });
     })
     .catch((err) => {
       console.log(err);
@@ -96,4 +121,6 @@ module.exports = {
   createUser,
   getUserMe,
   loginUser,
+  updateUserInfo,
+  updateUserAvatar,
 };

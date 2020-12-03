@@ -42,9 +42,6 @@ function EditProfilePopup({ onUpdateUser, isOpen, onClose, onClick }) {
         });
     }
 
-    function one(a) {
-        
-    }
     React.useEffect(() => {
         setInputValue({
             name: currentUser.name || '',

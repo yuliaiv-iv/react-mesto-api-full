@@ -35,6 +35,7 @@ function App() {
   const history = useHistory();
 
   console.log("state",cards)
+  console.log("Appuser", currentUser)
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -47,8 +48,8 @@ function App() {
       });
   }, [loggedIn])
 
-  // console.log("appUser", api.getUserData())
-  // console.log("app2", api.getInitialCards())
+  console.log("appUser", api.getUserData())
+  console.log("app2", api.getInitialCards())
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like === currentUser._id);
@@ -111,6 +112,7 @@ function App() {
     api.setUserData(data)
       .then((result) => {
         setCurrentUser(result);
+        console.log(result)
         closeAllPopups();
       })
       .catch((err) => {
@@ -155,7 +157,7 @@ function App() {
     auth.register(email, password)
       .then((data) => {
         if (data) {
-          history.push('/sign-in');
+          history.push('/signin');
           setMessagePopupOpen(true);
           setIsSuccessful(true);
           setMessage('Вы успешно зарегистрировались!');
@@ -196,7 +198,7 @@ function App() {
 
   function tokenCheck() {
     const token = localStorage.getItem('token');
-    console.log(token)
+    // console.log(token)
     if (token) {
       auth.checkToken(token)
         .then((data) => {
@@ -215,7 +217,7 @@ function App() {
   function onSignOut() {
     localStorage.removeItem('token');
     setLoggedIn(false)
-    history.push('/sign-in')
+    history.push('/signin')
   }
 
   useEffect(() => {
@@ -241,18 +243,18 @@ function App() {
               />
               <Footer />
             </ProtectedRoute>
-            <Route path="/sign-up">
+            <Route path="/signup">
               <Register
                 onRegister={handleRegisterSubmit}
               />
             </Route>
-            <Route path="/sign-in">
+            <Route path="/signin">
               <Login
                 onLoggin={handleLoginSubmit}
               />
             </Route>
             <Route>
-              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
             </Route>
           </Switch>
         </div>

@@ -7,6 +7,7 @@ const auth = (req, res, next) => {
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
   const token = authorization.replace('Bearer ', '');
+  console.log('vvv', token);
   let payload;
   try {
     payload = jwt.verify(token, 'some-secret-key');
@@ -14,6 +15,7 @@ const auth = (req, res, next) => {
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
   req.user = payload;
+  console.log('ccc', payload);
   next();
 };
 
