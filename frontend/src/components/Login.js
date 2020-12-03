@@ -30,7 +30,7 @@ function Login({ onLoggin }) {
   return (
     <>
       <Header
-        link="Регистрация" path='/sign-up'
+        link="Регистрация" path='/signup'
       />
       <Form
         title="Вход"
