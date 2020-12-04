@@ -101,7 +101,7 @@ const updateUserAvatar = (req, res) => {
 
 const loginUser = (req, res) => {
   const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
+  User.findUserByCredentials(email, password)
     .then((user) => {
       // console.log(user);
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });

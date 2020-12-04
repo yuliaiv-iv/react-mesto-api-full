@@ -34,8 +34,8 @@ function App() {
 
   const history = useHistory();
 
-  console.log("state",cards)
-  console.log("Appuser", currentUser)
+  // console.log("state",cards)
+  // console.log("Appuser", currentUser)
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -48,8 +48,13 @@ function App() {
       });
   }, [loggedIn])
 
-  console.log("appUser", api.getUserData())
-  console.log("app2", api.getInitialCards())
+  useEffect(() => {
+    tokenCheck();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // console.log("appUser", api.getUserData())
+  // console.log("app2", api.getInitialCards())
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like === currentUser._id);
@@ -198,12 +203,12 @@ function App() {
 
   function tokenCheck() {
     const token = localStorage.getItem('token');
-    // console.log(token)
+    console.log((typeof(token)))
     if (token) {
       auth.checkToken(token)
         .then((data) => {
-          setEmail(data.data.email)
           setLoggedIn(true)
+          setEmail(data.data.email)
           history.push('/')
         })
         .catch((err) => {
@@ -220,9 +225,9 @@ function App() {
     history.push('/signin')
   }
 
-  useEffect(() => {
-    tokenCheck();
-  });
+  // useEffect(() => {
+  //   tokenCheck();
+  // });
 
   return (
     <div className="page">
@@ -231,7 +236,7 @@ function App() {
           <Switch>
             <ProtectedRoute exact path='/' loggedIn={loggedIn}>
               <Header email={email} link="Выйти" onClick={onSignOut} />
-              {console.log("App return", cards)}
+              {/* {console.log("App return", cards)} */}
               <Main
                 cards={cards}
                 onEditProfile={handleEditProfileClick}
