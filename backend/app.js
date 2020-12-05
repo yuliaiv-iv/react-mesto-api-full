@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routers = require('./routes/index');
@@ -7,6 +8,7 @@ const { loginUser, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
+// console.log(process.env.NODE_ENV);
 
 const app = express();
 app.use(cors());
@@ -28,6 +30,12 @@ app.use(routers);
 
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+});
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
+  next();
 });
 
 app.listen(PORT, () => {

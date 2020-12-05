@@ -6,7 +6,6 @@ export class Api {
 
     getHeader() {
         const token = localStorage.getItem('token');
-        // console.log("api", token)
         return {
             ...this._headers,
             Authorization: `Bearer ${token}`,
