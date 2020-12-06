@@ -8,7 +8,7 @@ export class Api {
         const token = localStorage.getItem('token');
         return {
             ...this._headers,
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         }
     }
 
@@ -23,7 +23,7 @@ export class Api {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this.getHeader(),
         })
-            .then((this._checkStatus));
+            .then(this._checkStatus);
     }
 
     getUserData() {

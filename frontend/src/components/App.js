@@ -34,9 +34,6 @@ function App() {
 
   const history = useHistory();
 
-  console.log("state",cards)
-  console.log("Appuser", currentUser)
-
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
       .then(([info, card]) => {
@@ -48,8 +45,9 @@ function App() {
       });
   }, [loggedIn])
 
-  console.log("appUser", api.getUserData())
-  console.log("app2", api.getInitialCards())
+  useEffect(() => {
+    tokenCheck();
+  }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like === currentUser._id);
@@ -198,12 +196,13 @@ function App() {
 
   function tokenCheck() {
     const token = localStorage.getItem('token');
-    // console.log(token)
+
     if (token) {
       auth.checkToken(token)
         .then((data) => {
-          setEmail(data.data.email)
+          console.log(data)
           setLoggedIn(true)
+          setEmail(data.email)
           history.push('/')
         })
         .catch((err) => {
@@ -220,18 +219,14 @@ function App() {
     history.push('/signin')
   }
 
-  useEffect(() => {
-    tokenCheck();
-  });
-
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
+        {console.log(currentUser)}
         <div className="container">
           <Switch>
             <ProtectedRoute exact path='/' loggedIn={loggedIn}>
               <Header email={email} link="Выйти" onClick={onSignOut} />
-              {console.log("App return", cards)}
               <Main
                 cards={cards}
                 onEditProfile={handleEditProfileClick}
