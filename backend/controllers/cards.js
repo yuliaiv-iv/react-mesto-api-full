@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
+const ForbiddenError = require('../errors/forbidden-error');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -26,10 +27,15 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
+  const owner = req.user._id;
+  console.log(owner);
   Card.findByIdAndRemove(req.params.id)
     .then((card) => {
+      console.log(card);
       if (!card) {
         throw new NotFoundError({ message: 'Запрашиваемый ресурс не найден' });
+      } else if (card.owner.toString() !== owner) {
+        throw new ForbiddenError({ message: 'Вы не можите удалить не свою карточку' });
       }
       return res.status(200).send(card);
     })
