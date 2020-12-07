@@ -200,7 +200,6 @@ function App() {
     if (token) {
       auth.checkToken(token)
         .then((data) => {
-          console.log(data)
           setLoggedIn(true)
           setEmail(data.email)
           history.push('/')
@@ -222,7 +221,6 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        {console.log(currentUser)}
         <div className="container">
           <Switch>
             <ProtectedRoute exact path='/' loggedIn={loggedIn}>
