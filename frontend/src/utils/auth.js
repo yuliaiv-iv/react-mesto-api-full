@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://yuliainthecloud.students.nomoredomains.monster';
 
 export const checkStatus = (res) => {
   if (res.ok) {
