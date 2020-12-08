@@ -87,9 +87,8 @@ export class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://yuliainthecloud.students.nomoredomains.monster',
     headers: {
-        // authorization: '4905795f-d4f5-4259-8ab1-1154380da5eb',
         'Content-Type': 'application/json'
     }
 }); 
