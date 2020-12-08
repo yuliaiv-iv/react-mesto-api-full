@@ -87,7 +87,7 @@ export class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'https://yuliainthecloud.students.nomoredomains.monster',
+    baseUrl: 'https://api.yuliainthecloud.students.nomoredomains.monster',
     headers: {
         'Content-Type': 'application/json'
     }
