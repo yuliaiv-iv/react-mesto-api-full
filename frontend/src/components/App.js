@@ -110,7 +110,6 @@ function App() {
     api.setUserData(data)
       .then((result) => {
         setCurrentUser(result);
-        console.log(result)
         closeAllPopups();
       })
       .catch((err) => {

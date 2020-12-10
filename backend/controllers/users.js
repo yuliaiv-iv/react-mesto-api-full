@@ -18,7 +18,7 @@ const getUser = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError({ message: 'Запрашиваемый ресурс не найден' });
+        throw new NotFoundError('Запрашиваемый ресурс не найден');
       }
       return res.status(200).send(user);
     })
@@ -29,7 +29,7 @@ const getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError({ message: 'Запрашиваемый ресурс не найден' });
+        throw new NotFoundError('Запрашиваемый ресурс не найден');
       }
       return res.status(200).send(user);
     })
@@ -43,7 +43,7 @@ const createUser = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        throw new ConflictError({ message: 'Пользователь с таким email уже существует' });
+        throw new ConflictError('Пользователь с таким email уже существует');
       }
       return bcrypt.hash(password, 10);
     })
@@ -56,7 +56,7 @@ const createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
       next(err);
     });
@@ -72,7 +72,7 @@ const updateUserInfo = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
       next(err);
     });
@@ -87,7 +87,7 @@ const updateUserAvatar = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
       next(err);
     });
@@ -102,7 +102,7 @@ const loginUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
       next(err);
     });
