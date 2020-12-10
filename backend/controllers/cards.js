@@ -20,7 +20,7 @@ const createCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
       next(err);
     });
@@ -28,16 +28,15 @@ const createCard = (req, res, next) => {
 
 const deleteCard = (req, res, next) => {
   const owner = req.user._id;
-  console.log(owner);
-  Card.findByIdAndRemove(req.params.id)
+  Card.findById(req.params.id)
     .then((card) => {
-      console.log(card);
       if (!card) {
-        throw new NotFoundError({ message: 'Запрашиваемый ресурс не найден' });
+        throw new NotFoundError('Запрашиваемый ресурс не найден');
       } else if (card.owner.toString() !== owner) {
-        throw new ForbiddenError({ message: 'Вы не можите удалить не свою карточку' });
+        throw new ForbiddenError('Вы не можите удалить не свою карточку');
       }
-      return res.status(200).send(card);
+      Card.findByIdAndRemove(req.params.id)
+        .then((removedCard) => res.status(200).send(removedCard));
     })
     .catch((err) => next(err));
 };
@@ -48,13 +47,13 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.status(200).send(card))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Запрашиваемый ресурс не найден');
       }
-      next(err);
-    });
+      return res.status(200).send(card);
+    })
+    .catch((err) => next(err));
 };
 
 const dislikeCard = (req, res, next) => {
@@ -63,13 +62,13 @@ const dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.status(200).send(card))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError({ message: 'Переданы некорректные данные' }));
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Запрашиваемый ресурс не найден');
       }
-      next(err);
-    });
+      return res.status(200).send(card);
+    })
+    .catch((err) => next(err));
 };
 
 module.exports = {

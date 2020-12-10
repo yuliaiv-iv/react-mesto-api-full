@@ -1,5 +1,6 @@
 export const BASE_URL = 'https://api.yuliainthecloud.students.nomoredomains.monster';
 
+
 export const checkStatus = (res) => {
   if (res.ok) {
     return res.json();
